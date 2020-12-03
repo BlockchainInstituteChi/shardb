@@ -3,7 +3,31 @@ var userDir = __dirname + '/users/';
 console.log(userDir);
 var users = new shardb({
   dir: userDir,
-  identifier: 'issuer',
+  identifier: 'issuer', // this is your primary key for object retrieval
+  format :  {
+    issuer: "text",
+    email: "text"
+  },
+  ops : { // ops are for utility functions, and can be accessed under the db object 
+    sayTen : function () {
+      console.log('Method test 10')
+    },
+    sayN : function (n) {
+      console.log('Method test n: ', n)
+    },
+    countRecords : async function () {
+      var allUsers = await users.get() // runs in the current context ** 
+      console.log('Method countAll: ', allUsers.length)
+    }
+  }, 
+  methods : {
+    sayHi : function () {
+      console.log('hi!')
+    },
+    sayMyId : function () {
+      
+    }
+  }
 });
 
 module.exports = {test: testAll};
@@ -25,6 +49,12 @@ async function testAll() {
   var newestUser = await users.getOne(newUser.issuer);
 
   console.log('created new user!', newestUser); // will print null - this is correct
+
+
+  console.log('Method tests', users.ops)
+  users.ops.sayTen()
+  users.ops.sayN('11')
+  users.ops.countRecords()
 
   // update user
   var updatedUser = await users.update(newestUser.issuer, {

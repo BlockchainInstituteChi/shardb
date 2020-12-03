@@ -6,16 +6,27 @@ const rimraf = require('rimraf');
 
 class shardb {
   constructor(init) {
+    
     this.dir = init.dir;
     this.identifier = init.identifier;
+
+    // Instantiate the global variables
+    var _this = this;
+
+    console.log('init.methods', init.methods)
+    this.ops = { };
+
+    if ( init.ops ) {
+      Object.keys(init.ops).forEach(function(key) {
+        _this.ops[key] = init.ops[key]
+      })
+      this.ops = _this.ops
+    }
 
     // If the specified directory does not exist, we create it
     if (!fsOld.existsSync(init.dir)) {
       fsOld.mkdirSync(init.dir);
     }
-
-    // Instantiate the global variables
-    var _this = this;
 
     // Returns a sha256 hash as the filename, with a prefix for the correct directory
     this.getFileName = function (identifier) {
