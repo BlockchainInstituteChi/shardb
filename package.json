@@ -1,0 +1,65 @@
+{
+  "_from": "shardb@1.0.4",
+  "_id": "shardb@1.0.4",
+  "_inBundle": false,
+  "_integrity": "sha512-Zug6MoUvMOnZUH1VBDGSwPe/dxSSDPfa+oFVdU5yE6uHoDnpbrraAIt1ZUHjB8OLhAZOWPKtnx2Cokf/xffECA==",
+  "_location": "/shardb",
+  "_phantomChildren": {
+    "glob": "7.1.6"
+  },
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "shardb@1.0.4",
+    "name": "shardb",
+    "escapedName": "shardb",
+    "rawSpec": "1.0.4",
+    "saveSpec": null,
+    "fetchSpec": "1.0.4"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/shardb/-/shardb-1.0.4.tgz",
+  "_shasum": "41be0df0b162de00d69f23dff2265f4fce62496e",
+  "_spec": "shardb@1.0.4",
+  "_where": "/home/al/Desktop/institute/WeTeachBlockchain-App-Server",
+  "author": {
+    "name": "Alexander Morris"
+  },
+  "bugs": {
+    "url": "https://github.com/BlockchainInstituteChi/shardb/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "delete": "^1.1.0",
+    "fs": "0.0.1-security",
+    "jsonfile": "^6.1.0",
+    "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
+    "sha256": "^0.2.0"
+  },
+  "deprecated": false,
+  "description": "If you're building a decentralized app, and you need a simple database to offer you basic storage, in any location you choose, you can use SharDB to generate JSON flat file databases and specify storage locations on the fly.",
+  "devDependencies": {},
+  "homepage": "https://github.com/BlockchainInstituteChi/shardb#readme",
+  "keywords": [
+    "Database",
+    "Decentraliztion",
+    "Storage"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "shardb",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlockchainInstituteChi/shardb.git"
+  },
+  "scripts": {
+    "esLintTest": "eslint --ignore-path .gitignore --fix .",
+    "prettify": " ./node_modules/.bin/prettier --single-quote --trailing-comma es5 --print-width 80 --write --no-bracket-spacing **/*.js",
+    "test": "node -e 'require(\"./test.js\").test()'"
+  },
+  "version": "1.0.4"
+}
