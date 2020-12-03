@@ -20,7 +20,7 @@ var users = new shardb({
 ```
 The 'identifier' should be the name of the parameter in the object which will act as the primary key. All database records must have a value for this field. 
 
-Now, each new object in your database will receive a single JSON file, and you can call and search them using the three collection objects created in the statements above.
+Now, each new object in your database will receive a single JSON file, and you can call and search them using the `users` collection objects created in the statements above.
 
 Piece of cake, right?
 
@@ -28,61 +28,57 @@ Piece of cake, right?
 As you can see in the last example, you just need to pass a folder name to instantiate the database.
 
 ## Manipulating Records
-The shardb object supports the following operations. The example below shows the full create, delete, clear, flow for a simple user with a DID.
+The shardb object supports the following operations. The example below shows the full create, delete, clear, flow for a simple user with a DID. (see test.js for example)
 
 ```
-const shardb = require('shardb')
-var userDir = __dirname + "/users/"
-console.log(userDir)
+const shardb = require('./index.js');
+var userDir = __dirname + '/users/';
+console.log(userDir);
 var users = new shardb({
-    dir: userDir,
-    identifier: "issuer"
-})
+  dir: userDir,
+  identifier: 'issuer',
+});
 
-testAll()
+module.exports = {test: testAll};
 
 async function testAll() {
-    console.log(users)
+  console.log(users);
 
-    console.log('user.getFileName', users.getFileName('alex'))
+  console.log('getting users');
+  const USERS = await users.get();
+  console.log('user.files', USERS);
 
-    console.log('getting users')
-    const USERS = await users.getFiles()
-    console.log('user.files', USERS)
+  var newUser = {
+    issuer: 'did:ethr:0x1003c7Cb960BC6c476c1BD6e33F13dbC96eHS271',
+    email: 'alex@weteachblockchain.org',
+  };
 
-    var newUser = {
-        "issuer": 'did:ethr:0x1003c7Cb960BC6c476c1BD6e33F13dbC96eHS271',
-        "email": "alex@test.com"
-    }
+  await users.create(newUser);
 
-    await users.createFile({
-        identifier: newUser.issuer,
-        data: newUser
-    })
+  var newestUser = await users.getOne(newUser.issuer);
 
-    var newestUser = await users.getFile(newUser.issuer)
+  console.log('created new user!', newestUser); // will print null - this is correct
 
-    console.log(newestUser)
+  // update user
+  var updatedUser = await users.update(newestUser.issuer, {
+    email: 'alex@tests.com',
+  });
 
-    // update user
-    var updatedUser = await users.updateFile(newestUser.issuer, { email: "alex@tests.com" })
+  var newestUser = await users.getOne(newUser.issuer);
 
-    var newestUser = await users.getFile(newUser.issuer)
+  console.log('updated user', newestUser);
 
-    console.log(newestUser)
+  await users.delete(newUser.issuer);
 
-    await users.deleteFile(newUser.issuer)
+  var newestUser = await users.getOne(newUser.issuer);
 
-    var newestUser = await users.getFile(newUser.issuer)
+  if (!newestUser === false) {
+    console.log('user deletion failed', newestUser);
+  } else {
+    console.log('user deleted successfully!');
+  }
 
-    if (!newestUser === false) {
-        console.log('user deletion failed', newestUser)
-    } else {
-        console.log('user deleted successfully!')
-    }
-
-    await users.selfDestruct()
-
+  await users.selfDestruct();
 }
 
 ```
