@@ -25,24 +25,24 @@ class shardb {
     // Caution: Highly destructive. Deletes the entire DB
     this.selfDestruct = async function () {
       rimraf(_this.dir, function (err, result) {
-        if (err) return console.log('rimraf err', err);
+        if (err) return console.log('self destruct error for ' + _this.dir, err);
         return;
       });
     };
 
     // Returns the file name and directory for a given primary key
-    this.getFile = function (identifier) {
+    this.getOne = function (identifier) {
       return loadFile(_this.getFileName(identifier));
     };
 
     // Returns the entire collection and filenames
-    this.getFiles = function () {
+    // TODO expand support for filter object
+    this.get = function () {
       return new Promise(async function (resolve, reject) {
         var files = fsOld.readdirSync(_this.dir);
         var shards = [];
         for (var file of files) {
           var shard = await loadFile(_this.dir + file);
-          console.log('shard is', shard);
           if (shard) {
             shard.fileName = _this.getFileName(shard[_this.identifier]);
             shards.push(shard);
@@ -53,13 +53,11 @@ class shardb {
     };
 
     // Returns an updated file, accepts update diff only (JSON)
-    this.updateFile = async function (identifier, update) {
+    this.update = async function (identifier, update) {
       return new Promise(async function (resolve, reject) {
-        var file = await _this.getFile(identifier);
+        var file = await _this.getOne(identifier);
 
         for (var key of Object.keys(update)) {
-          console.log('updating key', key);
-          console.log('found value', update[key]);
           file[key] = update[key];
         }
 
@@ -74,7 +72,7 @@ class shardb {
     };
 
     // Deletes the entire collection item
-    this.deleteFile = async function (identifier) {
+    this.delete = async function (identifier) {
       return new Promise(async function (resolve, reject) {
         del
           .promise([_this.getFileName(identifier)])
@@ -84,8 +82,7 @@ class shardb {
     };
 
     // Creates a new collection item (must contain a valid primary key)
-    this.createFile = async function (payload) {
-      console.log(payload, _this.identifier, payload[_this.identifier]);
+    this.create = async function (payload) {
       return new Promise(async function (resolve, reject) {
         fs.writeFile(
           _this.getFileName(payload[_this.identifier]),
