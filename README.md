@@ -1,3 +1,11 @@
+*This repo is in development - use at your own risk (and feel free to help :)*
+
+### TO-DO:
+1. Add filter support for collection.get()
+2. Add dynamic classes for collection creation
+3. Extend dynamic classes with methods
+4. Incorporate search / indexing of some sort (hash table, maybe?)
+
 # Shard DB (shardb for short!)
 If you're building a decentralized app, and you need a simple database to offer you basic storage, in any location you choose, you can use SharDB to generate JSON flat file databases and specify storage locations on the fly.
 
