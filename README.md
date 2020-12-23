@@ -1,4 +1,4 @@
-*This repo is in development - use at your own risk (and feel free to help :)*
+*This repo is in development - use at your own risk, and feel free to help :)*
 
 ### TO-DO:
 1. Add filter support for collection.get()
@@ -33,7 +33,7 @@ Now, each new object in your database will receive a single JSON file, and you c
 Piece of cake, right?
 
 ## The Constructor
-As you can see in the last example, you just need to pass a folder name to instantiate the database.
+As you can see in the last example, you just need to pass a folder name and an identifier to instantiate the database.
 
 ## Manipulating Records
 The shardb object supports the following operations. The example below shows the full create, delete, clear, flow for a simple user with a DID. (see test.js for example)
